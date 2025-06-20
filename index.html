@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZBE Madrid Navigator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        #map {
+            flex: 1;
+            width: 100%;
+        }
+        
+        .controls {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 1000;
+            background: white;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        
+        .alert-banner {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: #ff4444;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            z-index: 2000;
+            transform: translateY(-100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .alert-banner.show {
+            transform: translateY(0);
+        }
+        
+        .status-indicator {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: white;
+            padding: 10px;
+            border-radius: 50%;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            z-index: 1000;
+        }
+        
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #4CAF50;
+        }
+        
+        .status-dot.warning {
+            background: #ff9800;
+        }
+        
+        .status-dot.danger {
+            background: #f44336;
+        }
+        
+        button {
+            background: #1976D2;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        
+        button:hover {
+            background: #1565C0;
+        }
+        
+        .info-panel {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            max-width: 300px;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <div class="alert-banner" id="alertBanner">
+        <strong>¡Atención!</strong> Te estás acercando a una Zona de Bajas Emisiones
+    </div>
+    
+    <div class="controls">
+        <button onclick="centerOnUser()">Mi Ubicación</button>
+        <button onclick="toggleZBEVisibility()">Mostrar/Ocultar ZBE</button>
+        <button onclick="toggleTracking()">Activar/Desactivar Seguimiento</button>
+    </div>
+    
+    <div class="status-indicator">
+        <div class="status-dot" id="statusDot"></div>
+    </div>
+    
+    <div class="info-panel" id="infoPanel">
+        <h3>ZBE Madrid Navigator</h3>
+        <p>Estado: <span id="statusText">Inicializando...</span></p>
+        <p>Distancia a ZBE más cercana: <span id="distanceText">Calculando...</span></p>
+    </div>
+    
+    <div id="map"></div>
+    
+    <script src="app.js"></script>
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyADRUDdpHA4b_k318KKf_oVpQUZNsRFRCI&callback=initMap&libraries=geometry">
+    </script>
+</body>
+</html>
